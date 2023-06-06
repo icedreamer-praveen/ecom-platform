@@ -1,13 +1,13 @@
 from django import forms
-from .models import Order, Customer, Product
 from django.contrib.auth.models import User
+
+from .models import Customer, Order, Product
 
 
 class CheckoutForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ["ordered_by", "shipping_address",
-                  "mobile", "email", "payment_method"]
+        fields = ["ordered_by", "shipping_address", "mobile", "email", "payment_method"]
 
 
 class CustomerRegistrationForm(forms.ModelForm):
@@ -20,6 +20,12 @@ class CustomerRegistrationForm(forms.ModelForm):
         fields = ["username", "password", "email", "full_name", "address"]
 
     def clean_username(self):
+        """
+        This function checks if a username already exists in the User model and raises a validation error
+        if it does.
+        :return: The username (uname) is being returned if it does not already exist in the User model.
+        If it does exist, a validation error is raised.
+        """
         uname = self.cleaned_data.get("username")
         if User.objects.filter(username=uname).exists():
             raise forms.ValidationError(
@@ -41,8 +47,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ["title", "slug", "category", "image", "marked_price",
-                  "selling_price", "description", "warranty", "return_policy"]
+        fields = ["title", "slug", "category", "image", "marked_price", "selling_price", "description", "warranty", "return_policy"]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control",
@@ -90,6 +95,13 @@ class PasswordForgotForm(forms.Form):
     }))
 
     def clean_email(self):
+        """
+        This function checks if a customer with a given email exists and raises a validation error if
+        not.
+        :return: The email address (`e`) is being returned if a customer with that email exists in the
+        database. If a customer with that email does not exist, a `ValidationError` is raised with the
+        message "Customer with this account does not exist."
+        """
         e = self.cleaned_data.get("email")
         if Customer.objects.filter(user__email=e).exists():
             pass
@@ -112,6 +124,12 @@ class PasswordResetForm(forms.Form):
     }), label="Confirm New Password")
 
     def clean_confirm_new_password(self):
+        """
+        This function checks if the new password and confirm new password fields match and raises a
+        validation error if they don't.
+        :return: the value of the "confirm_new_password" field after checking if it matches the value of
+        the "new_password" field. If the two fields do not match, a validation error is raised.
+        """
         new_password = self.cleaned_data.get("new_password")
         confirm_new_password = self.cleaned_data.get("confirm_new_password")
         if new_password != confirm_new_password:

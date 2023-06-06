@@ -1,6 +1,16 @@
 from django.urls import path
-from .views import *
 
+from .views import (AboutView, AddToCartView, AdminHomeView, AdminLoginView,
+                    AdminOrderDetailView, AdminOrderListView,
+                    AdminOrderStatuChangeView, AdminProductCreateView,
+                    AdminProductListView, AllProductsView, CheckoutView,
+                    ContactView, CustomerLoginView, CustomerLogoutView,
+                    CustomerOrderDetailView, CustomerProfileView,
+                    CustomerRegistrationView, EmptyCartView, EsewaRequestView,
+                    EsewaVerifyView, HomeView, KhaltiRequestView,
+                    KhaltiVerifyView, ManageCartView, MyCartView,
+                    PasswordForgotView, PasswordResetView, ProductDetailView,
+                    SearchView)
 
 app_name = "ecomapp"
 urlpatterns = [
@@ -25,37 +35,30 @@ urlpatterns = [
     path("esewa-request/", EsewaRequestView.as_view(), name="esewarequest"),
     path("esewa-verify/", EsewaVerifyView.as_view(), name="esewaverify"),
 
-    path("register/",
-         CustomerRegistrationView.as_view(), name="customerregistration"),
+    path("register/", CustomerRegistrationView.as_view(), name="customerregistration"),
 
     path("logout/", CustomerLogoutView.as_view(), name="customerlogout"),
     path("login/", CustomerLoginView.as_view(), name="customerlogin"),
 
     path("profile/", CustomerProfileView.as_view(), name="customerprofile"),
-    path("profile/order-<int:pk>/", CustomerOrderDetailView.as_view(),
-         name="customerorderdetail"),
+    path("profile/order-<int:pk>/", CustomerOrderDetailView.as_view(), name="customerorderdetail"),
 
     path("search/", SearchView.as_view(), name="search"),
 
     path("forgot-password/", PasswordForgotView.as_view(), name="passworforgot"),
-    path("password-reset/<email>/<token>/",
-         PasswordResetView.as_view(), name="passwordreset"),
+    path("password-reset/<email>/<token>/", PasswordResetView.as_view(), name="passwordreset"),
+    
     # Admin Side pages
-
     path("admin-login/", AdminLoginView.as_view(), name="adminlogin"),
     path("admin-home/", AdminHomeView.as_view(), name="adminhome"),
-    path("admin-order/<int:pk>/", AdminOrderDetailView.as_view(),
-         name="adminorderdetail"),
+    path("admin-order/<int:pk>/", AdminOrderDetailView.as_view(), name="adminorderdetail"),
 
     path("admin-all-orders/", AdminOrderListView.as_view(), name="adminorderlist"),
 
-    path("admin-order-<int:pk>-change/",
-         AdminOrderStatuChangeView.as_view(), name="adminorderstatuschange"),
+    path("admin-order-<int:pk>-change/", AdminOrderStatuChangeView.as_view(), name="adminorderstatuschange"),
 
-    path("admin-product/list/", AdminProductListView.as_view(),
-         name="adminproductlist"),
-    path("admin-product/add/", AdminProductCreateView.as_view(),
-         name="adminproductcreate"),
+    path("admin-product/list/", AdminProductListView.as_view(), name="adminproductlist"),
+    path("admin-product/add/", AdminProductCreateView.as_view(), name="adminproductcreate"),
 
 
 ]
