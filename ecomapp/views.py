@@ -47,11 +47,11 @@ class HomeView(EcomMixin, TemplateView):
         """
         This function adds a list of products to the context data for a web page, with pagination.
         :return: a dictionary object `context` which contains the key-value pairs of `myname` and
-        `product_list`. The `myname` key has a string value "Dipak Niroula" and the `product_list` key
+        `product_list`. The `myname` key has a string value "Praveen Chaudhary" and the `product_list` key
         has a list of `Product` objects that are paginated with 8 items per page.
         """
         context = super().get_context_data(**kwargs)
-        context['myname'] = "Dipak Niroula"
+        context['myname'] = "Praveen Chaudhary"
         all_products = Product.objects.all().order_by("-id")
         paginator = Paginator(all_products, 8)
         page_number = self.request.GET.get('page')
